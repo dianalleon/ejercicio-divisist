@@ -21,7 +21,9 @@ formulario.addEventListener('submit', function () {
 
     
     materias.push(materia);
-    definitiva();
+    definitivaFinal();
+    cambiarColor();
+
     let result = `
     <thead class="thead-dark">
             <tr>
@@ -43,7 +45,7 @@ formulario.addEventListener('submit', function () {
             <td id="3">${item.sp}</td>
             <td id="4">${item.tp}</td>
             <td id="5">${item.ex}</td>
-            <td id="6">${item.def}</td>
+            <td style="background-color: ${item.color};" >${item.def}</td>
       </tr>`
     })
 
@@ -53,14 +55,35 @@ formulario.addEventListener('submit', function () {
 
 datos.style.display = "block";
 
+function cambiarColor(){
+
+    materias.map( item =>{
+    
+            if(item.def >0.0 && item.def<=2.9){
+                item.color="red"
+            }else if(item.def >=3.0 && item.def<=3.9){
+                item.color="yellow"
+            }else if(item.def >=4.0 && item.def<=5.0){
+                item.color="green"
+            }
+        })
+    }
+    
 
 
-function definitiva() {
-    let result2 = materias.map((item) => {
-        item.def = ((item.pp + item.sp + item.tp) / 3 * 0.7 + (item.ex * 0.3)).toFixed(2);
-        return materias;
-    });
-    return result2;
-}
 
+function definitivaFinal() {
 
+    materias.map(item => {
+  
+      let def = (((Number(item.pp) + Number(item.sp) + Number(item.tp))/3)*0.7+(item.ex* 0.3))
+  
+      if(def>=2.95&&def<3){
+  
+        def=3
+      }
+        item.def= def
+  
+    })
+  
+  }
